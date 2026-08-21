@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>História e Evolução da Informática</title>
+  <style>
+    /* RESET E ESTILOS GERAIS */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f7f6;
+      color: #333;
+    }
+
+    /* CABEÇALHO */
+    header {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .intro {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .intro h2 {
+      color: #1e3c72;
+      margin-bottom: 1rem;
+    }
+
+    /* FILTROS (BOTÕES) */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .filter-btn {
+      background-color: #fff;
+      border: 2px solid #2a5298;
+      color: #2a5298;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background-color: #2a5298;
+      color: #fff;
+    }
+
+    /* GRADE DE PERSONAGENS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      color: #1e3c72;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: #777;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    /* RODAPÉ */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #1e3c72;
+      color: #fff;
+      margin-top: 3rem;
+    }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .filter-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>A História da Informática</h1>
+    <p>Conheça os pioneiros e pioneiras que moldaram o mundo digital</p>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>A Evolução da Computação</h2>
+      <p>A informática não surgiu de um dia para o outro. Ela é fruto de séculos de descobertas matemáticas, engenharia e visão do futuro. Desde os primeiros instrumentos de cálculo mecânico até os computadores modernos e a internet, a tecnologia foi construída graças ao esforço conjunto de homens e mulheres extraordinários.</p>
+    </section>
+
+    <!-- Botões de filtro controlados por JavaScript -->
+    <div class="filter-container">
+      <button class="filter-btn active" onclick="filtrar('todos')">Todos</button>
+      <button class="filter-btn" onclick="filtrar('mulheres')">Mulheres Pioneras</button>
+      <button class="filter-btn" onclick="filtrar('homens')">Homens Pioneiros</button>
+    </div>
+
+    <!-- Cards dinâmicos carregados via JavaScript -->
+    <div class="cards-grid" id="cards-container"></div>
+  </main>
+
+  <footer>
+    <p>&copy; Projeto Educacional - A História da Informática</p>
+  </footer>
+
+  <script>
+    // DADOS HISTÓRICOS (Homens e Mulheres que marcaram a história)
+    const personagens = [
+      {
+        nome: "Ada Lovelace",
+        categoria: "mulheres",
+        ano: "1815 - 1852",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Ada_Lovelace_portrait.jpg",
+        descricao: "Matemática inglesa, é considerada a primeira programadora da história. Criou o primeiro algoritmo para ser processado por uma máquina mecânica (a Máquina Analítica de Babbage)."
+      },
+      {
+        nome: "Charles Babbage",
+        categoria: "homens",
+        ano: "1791 - 1871",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/d/d2/Charles_Babbage_1860.jpg",
+        descricao: "Matemático e inventor britânico conhecido como o 'pai do computador'. Projetou a Máquina Diferencial e a Máquina Analítica, conceitos fundamentais para os computadores modernos."
+      },
+      {
+        nome: "Alan Turing",
+        categoria: "homens",
+        ano: "1912 - 1954",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg",
+        descricao: "Considerado o pai da ciência da computação e da inteligência artificial. Formulou os conceitos da 'Máquina de Turing' e teve papel crucial na decifração de códigos na Segunda Guerra Mundial."
+      },
+      {
+        nome: "Grace Hopper",
+        categoria: "mulheres",
+        ano: "1906 - 1992",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Commodore_Grace_M._Hopper%2C_USN_%28covered%29.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original",
+        descricao: "Contra-almirante e cientista da computação norte-americana. Criou o primeiro compilador e popularizou o termo 'bug'. Também foi fundamental na criação da linguagem COBOL."
+      },
+      {
+        nome: "Margaret Hamilton",
+        categoria: "mulheres",
+        ano: "1936 - Presente",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/d/db/Margaret_Hamilton_-_restoration.jpg?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original",
+        descricao: "Cientista da computação que liderou a equipe da NASA responsável pelo software de navegação do Programa Apollo, garantindo o pouso seguro do homem na Lua."
+      },
+      {
+        nome: "John von Neumann",
+        categoria: "homens",
+        ano: "1903 - 1957",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/d/d6/JohnvonNeumann-LosAlamos.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+        descricao: "Matemático húngaro-americano que propôs a 'Arquitetura de Von Neumann', conceito onde dados e programas são armazenados na mesma memória, padrão usado até hoje."
+      },
+      {
+        nome: "Tim Berners-Lee",
+        categoria: "homens",
+        ano: "1955 - Presente",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Sir_Tim_Berners-Lee_%28cropped%29.jpg",
+        descricao: "Físico e cientista da computação britânico, criador da World Wide Web (WWW), do protocolo HTTP e do HTML, permitindo o surgimento da internet moderna."
+      },
+      {
+        nome: "Radia Perlman",
+        categoria: "mulheres",
+        ano: "1951 - Presente",
+        imagem: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Radia_Perlman.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=original",
+        descricao: "Engenheira de redes e cientista da computação apelidada de 'Mãe da Internet'. Inventou o protocolo STP (Spanning Tree Protocol), fundamental para a operação de redes de computadores."
+      },
+      {
+        nome: "Steve Jobs - Bill Gates",
+        categoria: "homens",
+        ano:  "Anos 1970 - 1980",
+        imagem: "https://pt.wikipedia.org/wiki/Steve_Jobs#/media/Ficheiro:Steve_Jobs_Headshot_2010-CROP.jpg",
+        descricao: "A revolução dos computadores pessoais. Steve Jobs (fundador da Apple) popularizou a interface gráfica com o Macintosh, e Bill Gates (fundador da Microsoft) massificou os sistemas operacionais com o MS-DOS e Windows."
+      },
+    ];
+
+    // FUNÇÃO PARA RENDERIZAR OS CARDS NA TELA
+    function renderizarCards(lista) {
+      const container = document.getElementById('cards-container');
+      container.innerHTML = ""; // Limpa o container antes de renderizar
+
+      lista.forEach(p => {
+        const cardHTML = `
+          <div class="card">
+            <img src="${p.imagem}" alt="Foto de ${p.nome}">
+            <div class="card-content">
+              <h3 class="card-title">${p.nome}</h3>
+              <p class="card-subtitle">${p.ano}</p>
+              <p class="card-text">${p.descricao}</p>
+            </div>
+          </div>
+        `;
+        container.innerHTML += cardHTML;
+      });
+    }
+
+    // FUNÇÃO DE FILTRO
+    function filtrar(categoria) {
+      // Atualiza estilo dos botões
+      const botões = document.querySelectorAll('.filter-btn');
+      botões.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      // Aplica o filtro
+      if (categoria === 'todos') {
+        renderizarCards(personagens);
+      } else {
+        const filtrados = personagens.filter(p => p.categoria === categoria);
+        renderizarCards(filtrados);
+      }
+    }
+
+    // Inicializa a página mostrando todos os personagens
+    renderizarCards(personagens);
+  </script>
+
+</body>
+</html>
